@@ -1,6 +1,10 @@
 import axios from 'axios'
 
+<<<<<<< HEAD:part1/notes/src/services/notes.js
 const baseUrl = 'http://localhost:3001/api/notes'
+=======
+const baseUrl = '/api/notes'
+>>>>>>> a28ad43ad36b5d26f4233a335caccbb4f5c18d2b:notes/src/services/notes.js
 
 const getAll = () => {
   const request = axios.get(baseUrl)
