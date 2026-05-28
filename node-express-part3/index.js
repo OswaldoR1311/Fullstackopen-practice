@@ -11,69 +11,6 @@ app.use(cors())
 
 app.use(requestLogger)
 
-let notes = [
-  {
-    id: '1',
-    content: 'HTML is easy',
-    important: true,
-  },
-  {
-    id: '2',
-    content: 'Browser can execute only JavaScript',
-    important: false,
-  },
-  {
-    id: '3',
-    content: 'GET and POST are the most important methods of HTTP protocol',
-    important: true,
-  },
-  {
-    content: '',
-    important: true,
-    id: 'gzaBmVHU2KU',
-  },
-  {
-    content: 'post',
-    important: false,
-    id: 'wVEnmFqhSRE',
-  },
-  {
-    content: 'otra nota',
-    important: false,
-    id: 'xQYOHeoErfY',
-  },
-  {
-    content: 'otra',
-    important: false,
-    id: '5TXEYM1PNho',
-  },
-  {
-    content: 'blabla',
-    important: false,
-    id: 'EAY_ZVuqPY0',
-  },
-  {
-    content: 'adasd',
-    important: false,
-    id: '9N3C2pKRl7c',
-  },
-  {
-    content: 'probando otra nota',
-    important: false,
-    id: '0LJi8_DbFFI',
-  },
-  {
-    content: 'haciendo otra cosa',
-    important: true,
-    id: '7DoMiszALIM',
-  },
-  {
-    content: 'porque me das',
-    important: true,
-    id: 'h1yGacy6Wkw',
-  },
-]
-
 app.get('/', (request, response) => {
   response.send('<h1>Hello world</h1>')
 })
@@ -116,14 +53,45 @@ app.post('/api/notes', (request, response) => {
   })
 })
 
-app.delete('/api/notes/:id', (request, response) => {
-  const id = request.params.id
-  notes = notes.filter((note) => note.id !== id)
+app.delete('/api/notes/:id', (request, response, next) => {
+  Note.findByIdAndDelete(request.params.id)
+    .then((result) => {
+      response.status(204).end()
+    })
+    .catch((error) => next(error))
+})
 
-  response.status(204).end()
+app.put('/api/notes/:id', (request, response, next) => {
+  const { content, important } = request.body
+
+  Note.findById(request.params.id)
+    .then((note) => {
+      if (!note) {
+        return response.status(404).end()
+      }
+
+      note.content = content
+      note.important = important
+
+      return note.save().then((updatedNote) => {
+        response.json(updatedNote)
+      })
+    })
+    .catch((error) => next(error))
 })
 
 app.use(unknownEndpoint)
+
+const errorHandler = (error, request, response, next) => {
+  console.log(error.name)
+  if (error.name === 'CastError') {
+    return response.status(400).send({ error: 'malformatted id' })
+  }
+
+  next(error)
+}
+
+app.use(errorHandler)
 
 const PORT = process.env.PORT
 app.listen(PORT, () => {
