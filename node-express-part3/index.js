@@ -91,11 +91,7 @@ const errorHandler = (error, request, response, next) => {
   if (error.name === 'CastError') {
     return response.status(400).send({ error: 'malformatted id' })
   } else if (error.name === 'ValidationError') {
-<<<<<<< HEAD
-    return response.status(400).send({ error: error.message })
-=======
     return response.status(400).json({ error: error.message })
->>>>>>> f29503e4a6233ff697b376826b0e2efb941a4be0
   }
 
   next(error)
