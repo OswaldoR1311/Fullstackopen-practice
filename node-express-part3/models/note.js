@@ -1,17 +1,18 @@
 const mongoose = require('mongoose')
 mongoose.set('strictQuery', false)
-require('dotenv').config()
+const config = require('../utils/config')
+const { infoLog, errorLog } = require('../utils/logger')
 
-const url = process.env.MONGODB_URI
+const url = config.MONGODB_URI
 
-console.log('Connecting to', url)
+infoLog('Connecting to', url)
 mongoose
   .connect(url, { family: 4 })
   .then((result) => {
-    console.log('connected to MongoDB')
+    infoLog('connected to MongoDB')
   })
   .catch((error) => {
-    console.log('error connecting to MongoDB', error.message)
+    errorLog('error connecting to MongoDB', error.message)
   })
 
 const noteSchema = new mongoose.Schema({

@@ -1,6 +1,7 @@
 const express = require('express')
 require('dotenv').config()
-const Note = require('./models/notes')
+const Note = require('./models/note')
+const config = require('./utils/config')
 const { requestLogger, unknownEndpoint } = require('./middlewares/middlewares')
 const app = express()
 const cors = require('cors')
@@ -86,6 +87,8 @@ const errorHandler = (error, request, response, next) => {
   console.log(error.name)
   if (error.name === 'CastError') {
     return response.status(400).send({ error: 'malformatted id' })
+  } else if (error.name === 'ValidationError') {
+    return response.status(400).send({ error: error.message })
   }
 
   next(error)
@@ -95,5 +98,5 @@ app.use(errorHandler)
 
 const PORT = process.env.PORT
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
+  console.log(`Server running on port ${config.PORT}`)
 })
