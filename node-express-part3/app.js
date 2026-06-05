@@ -4,9 +4,9 @@ const config = require('./utils/config')
 const { infoLog, errorLog } = require('./utils/logger')
 const notesRouter = require('./controllers/notes')
 const {
-	requestLogger,
-	unknownEndpoint,
-	errorHandler,
+  requestLogger,
+  unknownEndpoint,
+  errorHandler,
 } = require('./utils/middleware')
 
 const app = express()
@@ -14,9 +14,9 @@ const app = express()
 infoLog('connecting to', config.MONGODB_URI)
 
 mongoose
-	.connect(config.MONGODB_URI)
-	.then(() => infoLog('connected to MongoDB'))
-	.catch((error) => errorLog('error connection to MongoDB: ', error.message))
+  .connect(config.MONGODB_URI)
+  .then(() => infoLog('connected to MongoDB'))
+  .catch(error => errorLog('error connection to MongoDB: ', error.message))
 
 // app.use(express.static())
 app.use(express.json())
