@@ -35,3 +35,12 @@ Content-Type: application/json
   "password": "oswaldo"
 }
 
+###
+POST http://localhost:3001/api/notes
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik8xMzExIiwiaWQiOiI2YTI3NDJlYmE5ZmRmM2MyNDA0NjY5MTciLCJpYXQiOjE3ODEwMjAzMzV9.TeyVhNDb6oo8SBAHch9b4EsckBWHAWCSwxkyk7ybfgk
+
+{
+  "content": "Single page apps use token based auth",
+  "important": false
+}
