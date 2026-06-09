@@ -8,6 +8,30 @@ POST http://localhost:3001/api/notes
 Content-Type: application/json
 
 {
-    "content": "Vamos a ver si sigue funcionando",
-    "important": true
+    "content": "Esta es la segunda prueba que estamos haciendo",
+    "important": true,
+    "userId": "6a2742eba9fdf3c240466917"
 }
+
+###
+POST http://localhost:3001/api/users
+Content-Type: application/json
+
+{
+  "username": "O1311",
+  "name": "Oswaldo Rodríguez",
+  "password": "oswaldo"
+}
+
+###
+GET http://localhost:3001/api/users
+
+###
+POST http://localhost:3001/api/login
+Content-Type: application/json
+
+{
+  "username": "O1311",
+  "password": "oswaldo"
+}
+

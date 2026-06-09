@@ -3,6 +3,8 @@ const mongoose = require('mongoose')
 const config = require('./utils/config')
 const { infoLog, errorLog } = require('./utils/logger')
 const notesRouter = require('./controllers/notes')
+const usersRouter = require('./controllers/users')
+const loginRouter = require('./controllers/login')
 const {
 	requestLogger,
 	unknownEndpoint,
@@ -22,7 +24,9 @@ mongoose
 app.use(express.json())
 // app.use(requestLogger)
 
+app.use('/api/login', loginRouter)
 app.use('/api/notes', notesRouter)
+app.use('/api/users', usersRouter)
 
 app.use(unknownEndpoint)
 app.use(errorHandler)
