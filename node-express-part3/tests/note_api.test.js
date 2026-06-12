@@ -83,7 +83,6 @@ describe('when there is initially some notes saved', () => {
 		test('fails with status code 400 if data invalid', async () => {
 			const newNote = { important: true }
 			await api.post('/api/notes').send(newNote).expect(400)
-
 			const notesAtEnd = await notesInDb()
 			assert.strictEqual(notesAtEnd.length, initialNotes.length)
 		})
