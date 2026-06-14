@@ -22,6 +22,15 @@ const App = () => {
 		noteService.getAll().then(eventHandler)
 	}, [])
 
+	useEffect(() => {
+		const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
+		if (logedUserJSON) {
+			const user = JSON.parse(loggedUserJSON)
+			setUser(user)
+			noteService.setToken(user.token)
+		}
+	}, [])
+
 	const loginForm = () => (
 		<form onSubmit={handleLogin}>
 			<div>
@@ -59,6 +68,7 @@ const App = () => {
 		event.preventDefault()
 		try {
 			const user = await loginService.login({ username, password })
+			window.localStorage.setItem('loggedNoteAppUser', JSON.stringify(user))
 			noteService.setToken(user.token)
 			setUser(user)
 			setUsername('')
