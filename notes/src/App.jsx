@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react'
 import Footer from './components/Footer'
 import LoginForm from './components/LoginForm'
 import Note from './components/Note'
+import NoteForm from './components/NoteForm'
 import Notification from './components/Notification'
+import Togglable from './components/Togglable'
 import { notificationOptions, notificationStatusOptions } from './constants'
 import loginService from './services/login'
 import noteService from './services/notes'
@@ -34,37 +36,27 @@ const App = () => {
 	}, [])
 
 	const loginForm = () => {
-		const hideWhenVisible = { display: loginVisible ? 'none' : '' }
-		const showWhenVisible = { display: loginVisible ? '' : 'none' }
-
 		return (
-			<div>
-				<div style={hideWhenVisible}>
-					<button type="button" onClick={() => setLoginVisible(true)}>
-						log in
-					</button>
-				</div>
-				<div style={showWhenVisible}>
-					<LoginForm
-						username={username}
-						password={password}
-						handleLogin={handleLogin}
-						handlePasswordChange={setPassword}
-						handleUsernameChange={setUsername}
-					/>
-					<button type="button" onClick={() => setLoginVisible(false)}>
-						cancel
-					</button>
-				</div>
-			</div>
+			<Togglable buttonLabel={'login'}>
+				<LoginForm
+					username={username}
+					password={password}
+					handleLogin={handleLogin}
+					handlePasswordChange={setPassword}
+					handleUsernameChange={setUsername}
+				/>
+			</Togglable>
 		)
 	}
 
 	const noteForm = () => (
-		<form onSubmit={handleAddNote}>
-			<input value={newNote} onChange={handleInputChange} />
-			<button type="submit">save</button>
-		</form>
+		<Togglable buttonLabel={'login'}>
+			<NoteForm
+				onSubmit={handleAddNote}
+				value={newNote}
+				handleChange={handleInputChange}
+			/>
+		</Togglable>
 	)
 
 	const handleLogin = async (event) => {
