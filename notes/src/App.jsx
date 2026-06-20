@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Footer from './components/Footer'
 import LoginForm from './components/LoginForm'
 import Note from './components/Note'
@@ -11,17 +11,16 @@ import noteService from './services/notes'
 
 const App = () => {
 	const [notes, setNotes] = useState([])
-	const [newNote, setNewNote] = useState('')
 	const [showAll, setShowAll] = useState(true)
 	const [errorMessage, setErrorMessage] = useState(null)
 	const [notificationStatus, setNotificationStatus] = useState(null)
 	const [user, setUser] = useState(null)
 	const [username, setUsername] = useState('')
 	const [password, setPassword] = useState('')
-	const [loginVisible, setLoginVisible] = useState(false)
+
+	const noteFormRef = useRef() //referencia
 
 	useEffect(() => {
-		console.log('Effect')
 		const eventHandler = (initialNotes) => setNotes(initialNotes)
 		noteService.getAll().then(eventHandler)
 	}, [])
@@ -49,13 +48,30 @@ const App = () => {
 		)
 	}
 
+	const addNote = async (noteObject) => {
+		try {
+			noteFormRef.current.toggleVisibility()
+			const returnedNote = await noteService.create(noteObject)
+			setNotes(notes.concat(returnedNote))
+			setErrorMessage(notificationOptions.addSuccess)
+			setNotificationStatus(notificationStatusOptions.success)
+			setTimeout(() => {
+				setErrorMessage(null)
+				setNotificationStatus(null)
+			}, 3000)
+		} catch {
+			setErrorMessage('fail to add note')
+			setNotificationStatus(notificationStatusOptions.error)
+			setTimeout(() => {
+				setErrorMessage(null)
+				setNotificationStatus(null)
+			}, 3000)
+		}
+	}
+
 	const noteForm = () => (
-		<Togglable buttonLabel={'login'}>
-			<NoteForm
-				onSubmit={handleAddNote}
-				value={newNote}
-				handleChange={handleInputChange}
-			/>
+		<Togglable buttonLabel={'new note'} ref={noteFormRef}>
+			<NoteForm createNote={addNote} />
 		</Togglable>
 	)
 
@@ -75,30 +91,6 @@ const App = () => {
 			}, 5000)
 		}
 	}
-
-	console.log('render', notes.length, 'notes')
-
-	const handleAddNote = (event) => {
-		event.preventDefault()
-		const newObject = {
-			content: newNote,
-			important: Math.random() < 0.5,
-		}
-
-		const eventHandler = (returnedObject) => {
-			setNotes(notes.concat(returnedObject))
-			setNewNote('')
-		}
-		noteService.create(newObject).then(eventHandler)
-		setErrorMessage(notificationOptions.addSuccess)
-		setNotificationStatus(notificationStatusOptions.success)
-		setTimeout(() => {
-			setErrorMessage(null)
-			setNotificationStatus(null)
-		}, 3000)
-	}
-
-	const handleInputChange = (event) => setNewNote(event.target.value)
 
 	const notesToShow = showAll ? notes : notes.filter((note) => note.important)
 
