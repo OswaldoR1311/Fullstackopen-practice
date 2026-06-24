@@ -11,7 +11,7 @@ test('<NoteForm /> updates parent state and calls onSubmit', async () => {
 	// const input = screen.getByRole('textbox') //accedemos al input mediante su rol.(optimo cuando es solo 1 input)
 	// const input = screen.getByLabelText('content') // obtenemos el contenido del input desde su label asociado para ser mas precisos si hay varios inputs
 
-	// const input = screen.getByPlaceholderText('write note content here') //obtener el contenido por medio del atributo placeholder, tambien preciso
+	const input = screen.getByPlaceholderText('write note content here') //obtener el contenido por medio del atributo placeholder, tambien preciso
 
 	console.log(container.querySelector)
 
