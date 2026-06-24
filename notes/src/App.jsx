@@ -18,7 +18,7 @@ const App = () => {
 	const [username, setUsername] = useState('')
 	const [password, setPassword] = useState('')
 
-	const noteFormRef = useRef() //referencia
+	const noteFormRef = useRef() //referencia para poder controlar el componente togglable desde afuera
 
 	useEffect(() => {
 		const eventHandler = (initialNotes) => setNotes(initialNotes)
