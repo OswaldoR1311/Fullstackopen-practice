@@ -1,11 +1,11 @@
 const Footer = () => {
-  return (
-    <div className='footer'>
-      <p>
-        This is the footer <strong>Oswaldo Rodríguez</strong>
-      </p>
-    </div>
-  )
+	return (
+		<div className="footer">
+			<p>
+				Note app, Department of Computer Science, University of Helsinki 2024
+			</p>
+		</div>
+	)
 }
 
 export default Footer

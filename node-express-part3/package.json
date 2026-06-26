@@ -12,7 +12,8 @@
 		"start": "cross-env NODE_ENV=production node index.js",
 		"format": "biome format --write.",
 		"lint": "biome lint --write.",
-		"check": "biome check --write."
+		"check": "biome check --write.",
+		"start:test": "cross-env NODE_ENV=test node --watch index.js"
 	},
 	"dependencies": {
 		"bcrypt": "^6.0.0",
