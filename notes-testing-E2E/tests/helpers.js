@@ -6,4 +6,10 @@ async function loginWith(page, username, password) {
 	await page.getByRole('button', { name: 'login' }).click()
 }
 
-export { loginWith }
+async function createNote(page, content) {
+	await page.getByRole('button', { name: 'new note' }).click()
+	await page.getByRole('textbox').fill(content)
+	await page.getByRole('button', { name: 'save' })
+}
+
+export { createNote, loginWith }
