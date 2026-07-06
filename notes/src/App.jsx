@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, Route, Routes, useMatch } from 'react-router-dom'
 import Footer from './components/Footer'
 import Home from './components/Home'
@@ -133,12 +133,7 @@ const App = () => {
 	// 			<Notification message={errorMessage} status={notificationStatus} />
 
 	// 			{!user && loginForm()}
-	// 			{user && (
-	// 				<div>
-	// 					<p>{user.name} logged in</p>
-	// 					{noteForm()}
-	// 				</div>
-	// 			)}
+	// 		
 	// 			<button type="button" onClick={onToggle}>
 	// 				show {showAll ? 'important' : 'all'}
 	// 			</button>

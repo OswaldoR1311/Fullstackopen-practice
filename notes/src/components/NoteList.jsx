@@ -35,7 +35,7 @@ function NoteList({ notes }) {
 			setPassword('')
 		} catch {
 			setErrorMessage('wrong credentials')
-			setTimeout(() => {
+			window.setTimeout(() => {
 				setErrorMessage(null)
 			}, 5000)
 		}
@@ -63,6 +63,11 @@ function NoteList({ notes }) {
 			<Notification message={errorMessage} />
 
 			{!user && loginForm()}
+			{user && (
+				<div>
+					<p>{user.name} logged in</p>
+				</div>
+			)}
 			<div>
 				<button type="button" onClick={() => setShowAll(!showAll)}>
 					show {showAll ? 'important' : 'all'}
