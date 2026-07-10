@@ -1,3 +1,12 @@
+import {
+	Paper,
+	Table,
+	TableBody,
+	TableCell,
+	TableContainer,
+	TableHead,
+	TableRow,
+} from '@mui/material'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import loginService from '../services/login'
@@ -61,8 +70,33 @@ function NoteList({ notes }) {
 		<div>
 			<h1>Notes</h1>
 			<Notification message={errorMessage} />
-
-			{!user && loginForm()}
+			<TableContainer component={Paper}>
+				<Table>
+					<TableHead>
+						<TableRow>
+							<TableCell>content</TableCell>
+							<TableCell>user</TableCell>
+							<TableCell>important</TableCell>
+						</TableRow>
+					</TableHead>
+					<TableBody>
+						{notes.map((note) => {
+							console.log(note)
+							console.log(user)
+							return (
+								<TableRow key={note.id}>
+									<TableCell>
+										<Link to={`/notes/${note.id}`}>{note.content}</Link>
+									</TableCell>
+									<TableCell>{username}</TableCell>
+									<TableCell>{note.important ? 'yes' : ''}</TableCell>
+								</TableRow>
+							)
+						})}
+					</TableBody>
+				</Table>
+			</TableContainer>
+			{/* {!user && loginForm()}
 			{user && (
 				<div>
 					<p>{user.name} logged in</p>
@@ -79,7 +113,7 @@ function NoteList({ notes }) {
 						<Link to={`/notes/${note.id}`}>{note.content}</Link>
 					</li>
 				))}
-			</ul>
+			</ul> */}
 		</div>
 	)
 }

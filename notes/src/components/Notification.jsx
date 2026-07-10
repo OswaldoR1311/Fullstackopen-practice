@@ -1,15 +1,11 @@
-const Notification = ({ message, status }) => {
-  if (!message) {
-    return null
-  }
+import { Alert } from '@mui/material'
 
-  return (
-    <div
-      className={`notification ${status === 'success' ? 'success' : 'error'}`}
-    >
-      {message}
-    </div>
-  )
+const Notification = ({ notification }) => {
+	return (
+		<Alert style={{ marginTop: 10, marginBottom: 10 }}>
+			{notification.text}
+		</Alert>
+	)
 }
 
 export default Notification

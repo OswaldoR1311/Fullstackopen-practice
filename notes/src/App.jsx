@@ -1,3 +1,4 @@
+import { Container } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { Link, Route, Routes, useMatch } from 'react-router-dom'
 import Footer from './components/Footer'
@@ -5,10 +6,12 @@ import Home from './components/Home'
 import Note from './components/Note'
 import NoteForm from './components/NoteForm'
 import NoteList from './components/NoteList'
+import Notification from './components/Notification'
 import noteService from './services/notes'
 
 const App = () => {
 	const [notes, setNotes] = useState([])
+	const [notification, setNotification] = useState(null)
 
 	useEffect(() => {
 		noteService.getAll().then((initialNotes) => {
@@ -19,6 +22,13 @@ const App = () => {
 	function addNote(noteObject) {
 		noteService.create(noteObject).then((returnedNote) => {
 			setNotes(notes.concat(returnedNote))
+			setNotification({
+				text: `Note '${returnedNote.content}' added!`,
+				type: 'success',
+			})
+			setTimeout(() => {
+				setNotification(null)
+			}, 5000)
 		})
 	}
 
@@ -50,7 +60,7 @@ const App = () => {
 	const note = match ? notes.find((note) => note.id === match.params.id) : null
 
 	return (
-		<>
+		<Container>
 			<div>
 				<Link style={padding} to={'/'}>
 					Home
@@ -62,6 +72,7 @@ const App = () => {
 					Create
 				</Link>
 			</div>
+			<Notification notification={notification} />
 			<Routes>
 				<Route path="/notes" element={<NoteList notes={notes} />} />
 				<Route
@@ -78,7 +89,7 @@ const App = () => {
 				<Route path="/" element={<Home />} />
 			</Routes>
 			<Footer />
-		</>
+		</Container>
 	)
 
 	// 	const noteFormRef = useRef() //referencia para poder controlar el componente togglable desde afuera
@@ -133,7 +144,7 @@ const App = () => {
 	// 			<Notification message={errorMessage} status={notificationStatus} />
 
 	// 			{!user && loginForm()}
-	// 		
+	//
 	// 			<button type="button" onClick={onToggle}>
 	// 				show {showAll ? 'important' : 'all'}
 	// 			</button>
