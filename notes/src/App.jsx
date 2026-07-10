@@ -1,4 +1,4 @@
-import { Container } from '@mui/material'
+import { AppBar, Button, Container, Toolbar } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { Link, Route, Routes, useMatch } from 'react-router-dom'
 import Footer from './components/Footer'
@@ -46,10 +46,6 @@ const App = () => {
 			})
 	}
 
-	const padding = {
-		padding: 5,
-	}
-
 	function deleteNote(id) {
 		noteService.remove(id).then(() => {
 			setNotes(notes.filter((n) => n.id !== id))
@@ -59,19 +55,23 @@ const App = () => {
 	const match = useMatch('/notes/:id')
 	const note = match ? notes.find((note) => note.id === match.params.id) : null
 
+	const style = { '&:hover': { bgcolor: 'rgba(255, 255, 255, .3)' } }
+
 	return (
 		<Container>
-			<div>
-				<Link style={padding} to={'/'}>
-					Home
-				</Link>
-				<Link style={padding} to={'/notes'}>
-					Notes
-				</Link>
-				<Link style={padding} to={'/create'}>
-					Create
-				</Link>
-			</div>
+			<AppBar position="static">
+				<Toolbar>
+					<Button color="inherit" component={Link} to={'/'} sx={style}>
+						home
+					</Button>
+					<Button color="inherit" component={Link} to={'/notes'} sx={style}>
+						Notes
+					</Button>
+					<Button color="inherit" component={Link} to={'/create'} sx={style}>
+						new note
+					</Button>
+				</Toolbar>
+			</AppBar>
 			<Notification notification={notification} />
 			<Routes>
 				<Route path="/notes" element={<NoteList notes={notes} />} />

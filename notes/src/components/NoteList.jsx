@@ -12,7 +12,6 @@ import { Link } from 'react-router-dom'
 import loginService from '../services/login'
 import noteService from '../services/notes'
 import LoginForm from './LoginForm'
-import NoteForm from './NoteForm'
 import Notification from './Notification'
 import Togglable from './Togglable'
 
