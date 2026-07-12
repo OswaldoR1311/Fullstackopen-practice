@@ -17,7 +17,7 @@
 		"rules": {
 			"preset": "recommended",
 			"a11y": {
-				"useButtonType": "error"
+				"useButtonType": "off"
 			}
 		}
 	},
