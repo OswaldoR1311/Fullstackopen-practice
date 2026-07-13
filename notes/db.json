@@ -17,12 +17,12 @@
     },
     {
       "content": "se puede crear ?",
-      "important": false,
+      "important": true,
       "id": "aJ2LL_sq-s4"
     },
     {
       "content": "Otra prueba",
-      "important": false,
+      "important": true,
       "id": "bpn_OrAor8c"
     }
   ],
