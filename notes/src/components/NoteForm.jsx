@@ -1,6 +1,7 @@
 import { Button, TextField } from '@mui/material'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import noteService from '../services/notes'
 import { useNoteActions } from '../store'
 
 // const NoteForm = ({ createNote }) => {
@@ -38,14 +39,14 @@ import { useNoteActions } from '../store'
 function NoteForm() {
 	const { add } = useNoteActions()
 
-	function generatedID() {
-		return Number(Math.random() * 1000000).toFixed(0)
-	}
+	// function generatedID() {
+	// 	return Number(Math.random() * 1000000).toFixed(0)
+	// }
 
-	function addNote(event) {
+	async function addNote(event) {
 		event.preventDefault()
 		const content = event.target.note.value
-		add({ id: generatedID(), content, important: false })
+		add(content)
 		event.target.reset()
 	}
 

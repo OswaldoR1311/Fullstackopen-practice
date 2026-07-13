@@ -86,6 +86,12 @@ const App = () => {
 	// 		</Container>
 	// 	)
 
+	const { initialize } = useNoteActions()
+
+	useEffect(() => {
+		initialize()
+	}, [initialize])
+
 	return (
 		<div>
 			<h2>Notes with Zustand</h2>
