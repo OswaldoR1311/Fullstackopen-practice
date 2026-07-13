@@ -1,6 +1,7 @@
 import { AppBar, Button, Container, Toolbar } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { Link, Route, Routes, useMatch } from 'react-router-dom'
+import FilterVisibility from './components/FilterVisibility'
 import Footer from './components/Footer'
 import Home from './components/Home'
 import Note from './components/Note'
@@ -84,13 +85,13 @@ const App = () => {
 	// 			<Footer />
 	// 		</Container>
 	// 	)
-	const notes = useNotes()
 
 	return (
 		<div>
 			<h2>Notes with Zustand</h2>
 			<br />
 			<NoteForm />
+			<FilterVisibility />
 			<NoteList />
 		</div>
 	)
