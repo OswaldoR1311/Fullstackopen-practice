@@ -17,7 +17,7 @@ export default defineConfig({
 	// 	globals: true,
 	// 	setupFiles: './testSetup.js',
 	// },
-	test: {
-		environment: 'jsdom',
-	},
+	// test: {
+	// 	environment: 'jsdom',
+	// },
 })

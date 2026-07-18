@@ -22,8 +22,13 @@
     },
     {
       "content": "Otra prueba",
-      "important": true,
+      "important": false,
       "id": "bpn_OrAor8c"
+    },
+    {
+      "content": "works ?",
+      "important": false,
+      "id": "V4fgtUPiw58"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

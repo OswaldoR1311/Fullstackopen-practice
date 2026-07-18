@@ -8,8 +8,11 @@ import Note from './components/Note'
 import NoteForm from './components/NoteForm'
 import NoteList from './components/NoteList'
 import Notification from './components/Notification'
+import { useNotes } from './hooks/useNotes'
 import noteService from './services/notes'
-import { useNoteActions, useNotes } from './store'
+import notes from './services/notes'
+
+// import { useNoteActions, useNotes } from './store'
 
 const App = () => {
 	// 	const [notes, setNotes] = useState([])
@@ -86,19 +89,57 @@ const App = () => {
 	// 		</Container>
 	// 	)
 
-	const { initialize } = useNoteActions()
+	// const { initialize } = useNoteActions()
 
-	useEffect(() => {
-		initialize()
-	}, [initialize])
+	// useEffect(() => {
+	// 	initialize()
+	// }, [initialize])
+
+	// return (
+	// 	<div>
+	// 		<h2>Notes with Zustand</h2>
+	// 		<br />
+	// 		<NoteForm />
+	// 		<FilterVisibility />
+	// 		<NoteList />
+	// 	</div>
+	// )
+
+	const {
+		notes,
+		isPending,
+		addNote: addNoteToServer,
+		toggleImportance,
+	} = useNotes()
+
+	async function addNote(event) {
+		event.preventDefault()
+		const content = event.target.note.value
+		event.target.reset()
+		addNoteToServer(content)
+	}
+
+	if (isPending) {
+		return <div>loading data...</div>
+	}
+
+	console.log(notes)
 
 	return (
 		<div>
-			<h2>Notes with Zustand</h2>
-			<br />
-			<NoteForm />
-			<FilterVisibility />
-			<NoteList />
+			<h2>Notes app</h2>
+			<form onSubmit={addNote}>
+				<input name="note" />
+				<button type="submit">add</button>
+			</form>
+			{notes.map((note) => (
+				<li key={note.id} onClick={() => toggleImportance(note)}>
+					{note.important ? <strong>{note.content}</strong> : note.content}
+					<button onClick={() => toggleImportance(note.id)}>
+						{note.important ? 'make not important' : 'make important'}
+					</button>
+				</li>
+			))}
 		</div>
 	)
 }
